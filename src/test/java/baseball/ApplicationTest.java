@@ -3,6 +3,8 @@ package baseball;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
@@ -44,9 +46,26 @@ class ApplicationTest extends NsTest {
 
         //when
         //then
-        Assertions.assertThat(Application.validation(input)).isTrue();
-        Assertions.assertThat(Application.validation(abnormalCase)).isFalse();
-        Assertions.assertThat(Application.validation(abnormalCase2)).isFalse();
-        Assertions.assertThat(Application.validation(abnormalCase3)).isFalse();
+        assertThat(Application.inputValidation(input)).isTrue();
+        assertThat(Application.inputValidation(abnormalCase)).isFalse();
+        assertThat(Application.inputValidation(abnormalCase2)).isFalse();
+        assertThat(Application.inputValidation(abnormalCase3)).isFalse();
+    }
+
+    @Test
+    void 볼판별테스트(){
+        String computerInput = "123";
+        String strike3 = "123";
+        String ball3 = "312";
+        String ball2strike1 = "321";
+        String nothing = "456";
+
+        //when
+        //then
+        assertThat(Application.distinguishBallCount(computerInput,strike3)).isTrue();
+        assertThat(Application.distinguishBallCount(computerInput,ball3)).isFalse();
+        assertThat(Application.distinguishBallCount(computerInput,ball2strike1)).isFalse();
+        assertThat(Application.distinguishBallCount(computerInput,nothing)).isFalse();
+
     }
 }
