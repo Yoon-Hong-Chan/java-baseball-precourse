@@ -11,11 +11,21 @@ public class Application {
     public static String question= "숫자를 입력해주세요 : ";
     public static void main(String[] args) {
         // TODO: 프로그램 구현
-        String number = String.valueOf(Randoms.pickNumberInRange(100,999));
+        String number;
+        while(true){
+            String tmpNumber = String.valueOf(Randoms.pickNumberInRange(100,999));
+            if(checkDuplicateNumber(tmpNumber)){
+                number = tmpNumber;
+                break;
+            }
+        }
+
+        System.out.println(number);
         System.out.print(question);
         String suggest = Console.readLine();
         if(!inputValidation(suggest)) throw new IllegalArgumentException();
         distinguishBallCount(number,suggest);
+
     }
 
     public static boolean distinguishBallCount(String number, String input){
@@ -39,9 +49,7 @@ public class Application {
         return (strike == 3);
     }
 
-    public static boolean inputValidation(String input) {
-        if (!input.matches("-?\\d{3}+")) return false; //숫자만으로 이뤄진 3자리 수 체크
-
+    public static boolean checkDuplicateNumber(String input){
         Set set = new HashSet();
         String[] numbers = input.split("");
         for(String number : numbers){ // 같은 숫자 존재 유무 체크
@@ -49,5 +57,10 @@ public class Application {
             set.add(number);
         }
         return true;
+    }
+
+    public static boolean inputValidation(String input) {
+        if (!input.matches("-?\\d{3}+")) return false; //숫자만으로 이뤄진 3자리 수 체크
+        return checkDuplicateNumber(input); // 중복 체크
     }
 }
