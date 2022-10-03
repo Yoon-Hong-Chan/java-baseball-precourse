@@ -1,6 +1,7 @@
 package baseball;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInRangeTest;
@@ -31,5 +32,21 @@ class ApplicationTest extends NsTest {
     @Override
     public void runMain() {
         Application.main(new String[]{});
+    }
+
+    @Test
+    void 입력값유효검사(){
+        //given
+        String input = "123";
+        String abnormalCase = "12345";
+        String abnormalCase2 = "12s";
+        String abnormalCase3 = "111";
+
+        //when
+        //then
+        Assertions.assertThat(Application.validation(input)).isTrue();
+        Assertions.assertThat(Application.validation(abnormalCase)).isFalse();
+        Assertions.assertThat(Application.validation(abnormalCase2)).isFalse();
+        Assertions.assertThat(Application.validation(abnormalCase3)).isFalse();
     }
 }
