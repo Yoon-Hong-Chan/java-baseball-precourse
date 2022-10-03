@@ -14,7 +14,7 @@ public class Application {
         String number = String.valueOf(Randoms.pickNumberInRange(100,999));
         System.out.print(question);
         String suggest = Console.readLine();
-        if(inputValidation(suggest)) throw new IllegalArgumentException();
+        if(!inputValidation(suggest)) throw new IllegalArgumentException();
         distinguishBallCount(number,suggest);
     }
 
