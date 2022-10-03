@@ -9,8 +9,14 @@ import java.util.Set;
 
 public class Application {
     public static String question= "숫자를 입력해주세요 : ";
+
     public static void main(String[] args) {
         // TODO: 프로그램 구현
+        while(true)
+            if(playGame().equals("2"))break;
+    }
+
+    public static String playGame(){
         String number;
         while(true){
             String tmpNumber = String.valueOf(Randoms.pickNumberInRange(100,999));
@@ -26,9 +32,10 @@ public class Application {
             if(!inputValidation(suggest)) throw new IllegalArgumentException();
             if(distinguishBallCount(number,suggest))break;
         }
-
+        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+        return Console.readLine();
     }
-
     public static boolean distinguishBallCount(String number, String input){
         int strike = 0;
         int ball = 0;
