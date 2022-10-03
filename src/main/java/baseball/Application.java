@@ -19,12 +19,13 @@ public class Application {
                 break;
             }
         }
-
         System.out.println(number);
-        System.out.print(question);
-        String suggest = Console.readLine();
-        if(!inputValidation(suggest)) throw new IllegalArgumentException();
-        distinguishBallCount(number,suggest);
+        while (true){
+            System.out.print(question);
+            String suggest = Console.readLine();
+            if(!inputValidation(suggest)) throw new IllegalArgumentException();
+            if(distinguishBallCount(number,suggest))break;
+        }
 
     }
 
