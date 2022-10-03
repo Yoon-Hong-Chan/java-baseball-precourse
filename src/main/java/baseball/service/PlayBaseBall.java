@@ -1,5 +1,9 @@
 package baseball.service;
 
+import baseball.domain.BallGroup;
+import baseball.enumeration.GameSelectOption;
+import baseball.model.JudgeBall;
+import baseball.view.GameView;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
@@ -9,35 +13,33 @@ import java.util.Set;
 
 public class PlayBaseBall {
  final int endStrikeCount = 3;
- final String inputMsg = "숫자를 입력해주세요 : ";
- final String completeMsg =  endStrikeCount+"개의 숫자를 모두 맞히셨습니다! 게임 종료";
- final String questionMsg =  "게임을 새로 시작하려면 "+GameSelectKey.continueGame.key+", 종료하려면 "+GameSelectKey.stopGame.key+"를 입력하세요.";
+ final GameView gameView = new GameView();
  final int RandomMinRange = 1;
  final int RandomMaxRange = 9;
 
  public void startGame(){
     while(true)
-     if(playGame().equals(GameSelectKey.stopGame.key))break;
-
-
+     if(playGame().equals(GameSelectOption.stopGame.getKey()))break;
   }
 
  public String playGame(){
   List<String> number = generateNumber();
   throwBall(number);
 
-  System.out.println(completeMsg);
-  System.out.println(questionMsg);
+  gameView.printCompleteGame(endStrikeCount);
+  gameView.printSelectOption();
   return Console.readLine();
  }
 
  public void throwBall(List<String> number){
-  JudgeBallCount judgeBallCount = new JudgeBallCount();
+  JudgeBall judgeBallCount = new JudgeBall();
   while (true){
-   System.out.print(inputMsg);
+   gameView.printInputGuide();
    String suggest = Console.readLine();
    if(!inputValidation(suggest)) throw new IllegalArgumentException();
-   if(judgeBallCount.JudgeBallCount(number,suggest) == endStrikeCount)break;
+   BallGroup ballGroup = judgeBallCount.JudgeBallCount(number,suggest);
+   gameView.printResult(ballGroup);
+   if(ballGroup.getStrike().getCount() == endStrikeCount)break;
   }
  }
 
@@ -67,14 +69,5 @@ public class PlayBaseBall {
    set.add(number);
   }
   return true;
- }
-
- enum GameSelectKey{
-  continueGame("1"),
-  stopGame("2");
-  String key;
-  GameSelectKey(String s) {
-   this.key = s;
-  }
  }
 }
